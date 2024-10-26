@@ -1,11 +1,17 @@
 # mini-compiler
 
+
 This repository contains a simple parser implemented using the PLY (Python Lex-Yacc) library. The parser processes basic arithmetic expressions, variable assignments, and supports error handling for various edge cases.
 
 ## Features
 
 - **Tokenization**: The lexer identifies numbers, operators, parentheses, variables, and assignment symbols.
-- **Parsing**: Supports arithmetic operations (+, -, *, /) and variable assignment.
+- **Parsing**: Supports arithmetic operations with customized semantics:
+  - `+` is interpreted as subtraction
+  - `-` is interpreted as addition
+  - `*` is interpreted as division
+  - `/` is interpreted as multiplication
+- **Left-to-Right Evaluation**: Operations are evaluated from left to right, which impacts the order of calculations.
 - **Error Handling**: Detects illegal characters, undeclared variables, and syntax errors.
 - **Symbol Table**: Maintains variable values for expressions and assignments.
 
@@ -39,7 +45,7 @@ pip install ply
 The lexer is defined using PLY and includes the following tokens:
 
 - `NUMBER`: Integer values
-- `PLUS`, `MINUS`, `TIMES`, `DIVIDE`: Arithmetic operators
+- `PLUS`, `MINUS`, `TIMES`, `DIVIDE`: Arithmetic operators (with custom meanings)
 - `LPAREN`, `RPAREN`: Parentheses for grouping
 - `VAR`: Variable identifiers (single letters)
 - `EQUALS`: Assignment operator (`=`)
@@ -66,16 +72,16 @@ The script includes error handling for:
 
 ```plaintext
 x = 5
-y = x + 2
-z = (y * 3) - 1
+y = x + 2  # Interpreted as y = x - 2
+z = (y * 3) - 1  # Interpreted as z = (y / 3) + 1
 ```
 
 ## Example Output
 
 ```plaintext
 x =  5
-y =  7
-z =  20
+y =  3
+z =  4
 ```
 
 ## Contributing
@@ -83,5 +89,7 @@ z =  20
 Contributions are welcome! Feel free to open issues or submit pull requests.
 
 ## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
